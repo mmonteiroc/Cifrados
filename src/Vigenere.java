@@ -8,6 +8,7 @@ public class Vigenere {
         StringBuilder passwordCompleta = new StringBuilder();
         for (int i = 0,j=0; i < s.length(); i++) {
             if (s.charAt(i) >= 65 && s.charAt(i)<=90){
+
                 //s.charAt(i) >= 65 && s.charAt(i)<=90
                 if (j == password.length()) j=0;
                 passwordCompleta.append(password.charAt(j));
