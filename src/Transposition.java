@@ -1,3 +1,4 @@
+
 public class Transposition {
     static String cypher(String s, int dim) {
 
@@ -33,21 +34,68 @@ public class Transposition {
 
     static String cypher(String s, String key) {
 
+
+
+
+
         return "";
     }
 
+
     static String decypher(String s, int dim) {
-        StringBuilder devolver = new StringBuilder();
-        int columnas = dim, filas = s.length()/columnas;
-        double x = (double) s.length()/columnas;
-        if (x>filas){
-            filas++;
+
+        //Contador que nos dira cuntos espacios tenemos
+        int cont = 0;
+        int contador = 0;
+
+        //Comprobaremos si necesitaremos caracteres especiales para los nulls
+        while ((s.length() + cont) % dim != 0){
+            cont++;
         }
-        int swap;
+
+        //Miramos si es decimal, y si lo es lo incrementamos hacia arriba
+        double conDecimales = (double) s.length()/dim;
+        int row = s.length()/dim;
+        if (conDecimales>row){
+            row++;
+        }
 
 
 
-        return devolver.toString();
+        char[][] matrix = new char[row][dim];
+        StringBuilder result = new StringBuilder();
+
+        //donde tenemos nulls ponemos un '*'
+        if (cont > 0) {
+            for (int i = matrix.length; i > 0; i--) {
+                int x = matrix[0].length -1;
+                for (int j = cont; j > 0; j--) {
+                    matrix[i - 1][x] = '*';
+                    x--;
+                }
+                break;
+            }
+        }
+
+        //Insertamos los caracteres del string uno a uno saltandonos las posiciones de los '*'
+        for (int i = 0; i < matrix[0].length; i++) {
+            for (int k = 0; k < matrix.length; k++) {
+                if (matrix[k][i] == '*'){continue;}
+                matrix[k][i] = s.charAt(contador);
+                contador++;
+            }
+        }
+
+        //Añadimos los caracteres de la matriz verticalmente ignorando los asteriscos
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] == '*'){ continue;}
+                result.append(matrix[i][j]);
+            }
+        }
+
+        printarMatrix(matrix,"");
+        return result.toString();
     }
 
     static String decypher(String s, String key) {
@@ -76,10 +124,10 @@ public class Transposition {
     }
 
 
-    public static void printarMatrix(String[][] mat, String n){
+    public static void printarMatrix(char[][] mat, String n){
         for (int i = 0; i < mat.length; i++) {
             for (int j = 0; j < mat[0].length; j++) {
-                if (mat[i][j]!=null){
+                if (mat[i][j]!='*'){
                     System.out.print(mat[i][j]);
                 }else {
                     System.out.print("+");
