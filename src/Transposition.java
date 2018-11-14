@@ -43,31 +43,17 @@ public class Transposition {
         if (x>filas){
             filas++;
         }
-        
-        String [][] matrix = crearMatrix(filas,columnas,s);
-        
-        String [][] matrizSaberNulls = transponerMatriz(matrix);
+        int swap;
 
-        String[][] newMatrix = new String[matrix.length][matrix[0].length];
-        for (int i = 0, n=0; i < newMatrix.length; i++) {
-            for (int j = 0, y=0; j < newMatrix[0].length; j++) {
 
-                if (matrizSaberNulls[i][j]!=null){
-                    newMatrix[i][j] = matrix[n][y];
-                    y++;
-                }
-            }
-            n++;
-        }
-
-        
-        
 
         return devolver.toString();
     }
 
     static String decypher(String s, String key) {
+
         return "";
+
     }
 
     public static String[][] crearMatrix(int nFilas, int nCol, String s){
@@ -89,19 +75,23 @@ public class Transposition {
         return matrix;
     }
 
-    public static String[][] transponerMatriz(String[][] matriz) {
-        //Transposicion de matriz
-        //Matriz original a[10][20]
-        //Matriz nueva    b[20][10]
-        int longitudH = matriz.length,longitudV = matriz[0].length;
-        String[][] matrizNueva=new String[longitudV][longitudH];
-        for (int i = 0; i < longitudH; i++) {
-            for (int j = 0; j < longitudV; j++) {
-                matrizNueva[j][i] = matriz[i][j];
+
+    public static void printarMatrix(String[][] mat, String n){
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[0].length; j++) {
+                if (mat[i][j]!=null){
+                    System.out.print(mat[i][j]);
+                }else {
+                    System.out.print("+");
+                }
             }
+            System.out.println();
         }
-        return matrizNueva;
+        System.out.println(n+"\n");
+
     }
+
+
 
 
 
