@@ -111,31 +111,4 @@ public class Caesar {
     }
 
 
-
-
-
-    public static int[] ordenarArrayDoble(int[] array) {
-
-        for (int i=array.length, x=0; i>x; i--, x++) {
-
-            for (int j = 1; j < i; j++) {
-                if (array[j - 1] > array[j]) {
-                    int Swap1 = array[j];
-                    array[j] = array[j - 1];
-                    array[j - 1] = Swap1;
-                }
-            }
-            for (int k = (i-1) ; k > x ; k--) {
-                if (array[k-1] > array[k]){
-                    int swap2 = array[k];
-                    array[k] = array[k-1];
-                    array[k-1] = swap2;
-                }
-            }
-
-        }
-        return array;
-    }
-
-
 }

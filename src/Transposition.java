@@ -1,5 +1,7 @@
 
 public class Transposition {
+
+
     static String cypher(String s, int dim) {
 
         StringBuilder devolver = new StringBuilder();
@@ -34,11 +36,67 @@ public class Transposition {
 
     static String cypher(String s, String key) {
 
+        StringBuilder devolucion = new StringBuilder();
+        int columnas = key.length(), filas = s.length()/columnas;
+        double x =(double) s.length()/columnas;
+        if (x>filas){
+            filas++;
+        }
+
+        String[][] matriz = new String[filas][columnas];
+        //** <-- NULLS
+        /*
+            L   I   C   E   U           PASSWORD
+            A   V   U   I
+            F   A       U   N
+            B   O   N       D
+            I   A   *   *   *
+
+         */
+
+        int ñ = 0;
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                if (ñ < s.length()){
+                    StringBuilder c = new StringBuilder();
+                    c.append(s.charAt(ñ));
+                    matriz[i][j] = c.toString();
+                    c.delete(0,c.length()-1);
+                    ñ++;
+                }
+            }
+        }
+
+        int [] letras = new int[key.length()];
+        StringBuilder passwordOrdenada = new StringBuilder();
+
+        for (int i = 0; i < letras.length; i++) {
+            letras[i] = key.charAt(i);
+        }
+        int[] letrasOrdenadas = ordenarArrayDoble(letras);
+        char a;
+        for (int i = 0; i < letrasOrdenadas.length; i++) {
+            a = (char) letrasOrdenadas[i];
+            passwordOrdenada.append(a);
+        }
+
+        for (int i = 0; i <passwordOrdenada.length() ; i++) {
+
+            int posicion = key.indexOf(passwordOrdenada.charAt(i));
+
+            for (int j = 0; j < matriz.length; j++) {
+                if (matriz[j][posicion] != null){
+                    devolucion.append(matriz[j][posicion]);
+                }
+            }
 
 
 
+        }
 
-        return "";
+        printarMatrix(matriz,"matriz con key");
+
+        return devolucion.toString();
     }
 
 
@@ -94,14 +152,15 @@ public class Transposition {
             }
         }
 
-        printarMatrix(matrix,"");
         return result.toString();
     }
 
     static String decypher(String s, String key) {
 
-        return "";
 
+
+
+        return "";
     }
 
     public static String[][] crearMatrix(int nFilas, int nCol, String s){
@@ -124,10 +183,10 @@ public class Transposition {
     }
 
 
-    public static void printarMatrix(char[][] mat, String n){
+    public static void printarMatrix(String[][] mat, String n){
         for (int i = 0; i < mat.length; i++) {
             for (int j = 0; j < mat[0].length; j++) {
-                if (mat[i][j]!='*'){
+                if (mat[i][j]!=null){
                     System.out.print(mat[i][j]);
                 }else {
                     System.out.print("+");
@@ -139,7 +198,28 @@ public class Transposition {
 
     }
 
+    public static int[] ordenarArrayDoble(int[] array) {
 
+        for (int i=array.length, x=0; i>x; i--, x++) {
+
+            for (int j = 1; j < i; j++) {
+                if (array[j - 1] > array[j]) {
+                    int Swap1 = array[j];
+                    array[j] = array[j - 1];
+                    array[j - 1] = Swap1;
+                }
+            }
+            for (int k = (i-1) ; k > x ; k--) {
+                if (array[k-1] > array[k]){
+                    int swap2 = array[k];
+                    array[k] = array[k-1];
+                    array[k-1] = swap2;
+                }
+            }
+
+        }
+        return array;
+    }
 
 
 
