@@ -80,10 +80,15 @@ public class Transposition {
             passwordOrdenada.append(a);
         }
 
+
+        StringBuilder key1 = new StringBuilder();
+        key1.append(key);
+        System.out.println(key1.toString());
         for (int i = 0; i <passwordOrdenada.length() ; i++) {
 
-            int posicion = key.indexOf(passwordOrdenada.charAt(i));
+            int posicion = key1.toString().indexOf(passwordOrdenada.charAt(i));
 
+            key1.replace(posicion,posicion+1,"+");
             for (int j = 0; j < matriz.length; j++) {
                 if (matriz[j][posicion] != null){
                     devolucion.append(matriz[j][posicion]);
