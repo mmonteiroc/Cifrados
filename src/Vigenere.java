@@ -6,27 +6,8 @@ public class Vigenere {
         password = password.toUpperCase();
         s = s.toUpperCase();
         StringBuilder devolver = new StringBuilder();
-        StringBuilder passwordCompleta = new StringBuilder();
-        for (int i = 0,j=0; i < s.length(); i++) {
-            if ((s.charAt(i) >= 65 && s.charAt(i)<=90) || (s.charAt(i)>=192 && s.charAt(i)<=220)){
+        StringBuilder passwordCompleta = new StringBuilder(crearPasswd(password,s));
 
-                //s.charAt(i) >= 65 && s.charAt(i)<=90
-                if (j == password.length()) j=0;
-                if  (password.charAt(j) == 181 || password.charAt(j) == 144 || password.charAt(j) ==214||
-                        password.charAt(j) ==224 || password.charAt(j) ==233 || password.charAt(j) == 183 ||
-                        password.charAt(j) ==212 || password.charAt(j) ==227 ){
-
-                    passwordCompleta.append(caracterEspecial(password.charAt(j)));
-
-                }else {
-                    passwordCompleta.append(password.charAt(j));
-                }
-                j++;
-
-            }else {
-                passwordCompleta.append(' ');
-            }
-        }
         StringBuilder newS = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) >= 65 && s.charAt(i)<=90){
@@ -92,27 +73,7 @@ public class Vigenere {
         password = password.toUpperCase();
         s = s.toUpperCase();
         StringBuilder devolver = new StringBuilder();
-        StringBuilder passwordCompleta = new StringBuilder();
-        for (int i = 0,j=0; i < s.length(); i++) {
-            if ((s.charAt(i) >= 65 && s.charAt(i)<=90) || (s.charAt(i)>=192 && s.charAt(i)<=220)){
-
-                //s.charAt(i) >= 65 && s.charAt(i)<=90
-                if (j == password.length()) j=0;
-                if  (password.charAt(j) == 181 || password.charAt(j) == 144 || password.charAt(j) ==214||
-                        password.charAt(j) ==224 || password.charAt(j) ==233 || password.charAt(j) == 183 ||
-                        password.charAt(j) ==212 || password.charAt(j) ==227 ){
-
-                    passwordCompleta.append(caracterEspecial(password.charAt(j)));
-
-                }else {
-                    passwordCompleta.append(password.charAt(j));
-                }
-                j++;
-
-            }else {
-                passwordCompleta.append(' ');
-            }
-        }
+        StringBuilder passwordCompleta = new StringBuilder(crearPasswd(password,s));
         StringBuilder newS = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) >= 65 && s.charAt(i)<=90){
@@ -141,4 +102,31 @@ public class Vigenere {
 
         return devolver.toString();
     }
+
+    public static String crearPasswd (String passwd,String s){
+        StringBuilder passwordCompleta = new StringBuilder();
+
+        for (int i = 0,j=0; i < s.length(); i++) {
+            if ((s.charAt(i) >= 65 && s.charAt(i)<=90) || (s.charAt(i)>=192 && s.charAt(i)<=220)){
+
+                //s.charAt(i) >= 65 && s.charAt(i)<=90
+                if (j == passwd.length()) j=0;
+                if  (passwd.charAt(j) == 181 || passwd.charAt(j) == 144 || passwd.charAt(j) ==214||
+                        passwd.charAt(j) ==224 || passwd.charAt(j) ==233 || passwd.charAt(j) == 183 ||
+                        passwd.charAt(j) ==212 || passwd.charAt(j) ==227 ){
+
+                    passwordCompleta.append(caracterEspecial(passwd.charAt(j)));
+
+                }else {
+                    passwordCompleta.append(passwd.charAt(j));
+                }
+                j++;
+
+            }else {
+                passwordCompleta.append(' ');
+            }
+        }
+        return passwordCompleta.toString();
+    }
+
 }

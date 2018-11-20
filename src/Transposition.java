@@ -1,4 +1,3 @@
-
 public class Transposition {
 
 
@@ -17,7 +16,7 @@ public class Transposition {
         String[][] newMatrix = new  String[matrix[0].length][matrix.length];
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j <matrix[0].length ; j++) {
-               newMatrix[j][i] = matrix[i][j];
+                newMatrix[j][i] = matrix[i][j];
 
             }
         }
@@ -169,14 +168,15 @@ public class Transposition {
         }
         int numNulls = (filas*columnas) - s.length() ;
 
-        System.out.println(columnas+"col\n"+filas+"fil\n"+numNulls+"nulls");
+        System.out.println("\n\n\n\n\n"+columnas+"col\n"+filas+"fil\n"+numNulls+"nulls");
 
         String [][] matriz = new String[filas][columnas];
         if (numNulls>0){
             System.out.println(numNulls);
+            int p = columnas-1;
             for (int i = numNulls; i >0 ; i--) {
-                matriz[filas-1][i]="*";
-
+                matriz[filas-1][p]="*";
+                p--;
             }
             printarMatrix(matriz,"bac");
         }
@@ -195,27 +195,25 @@ public class Transposition {
             passwordOrdenada.append(a);
         }
 
+        String[][] mat1 = new String[filas][columnas];
+        StringBuilder key1 = new StringBuilder(key.toString());
 
+        int[] indices = new int[passwordOrdenada.length()];
+        for (int i = 0; i < passwordOrdenada.length(); i++) {
+            int posi = key1.toString().indexOf(passwordOrdenada.charAt(i));
+            key1.replace(posi,posi+1,"%");
 
+            mat1[filas-1][i] = matriz[filas-1][posi];
 
+            indices[i] = posi;
 
-        String [][] mat1 = new String[filas][columnas];
-        StringBuilder key1 = new StringBuilder();
-        key1.append(key);
-        for (int z = 0; z < passwordOrdenada.length(); z++) {
-            int posicion = key1.toString().indexOf(passwordOrdenada.charAt(z));
-            key1.replace(posicion,posicion+1,"$");
-
-            for (int j = 0; j < filas; j++) {
-                mat1[j][posicion] = matriz[j][z];
-            }
         }
 
+        System.out.println(passwordOrdenada);
+        printarMatrix(mat1,"Matriz ordenada solo nulls");
         //Restablecemos la key a la por defecto
         key1.delete(0,key1.length());
         key1.append(key);
-
-
 
 
 
@@ -236,25 +234,31 @@ public class Transposition {
             }
         }
 
-        printarMatrix(mat1,"kkkk");
-
+        System.out.println(passwordOrdenada);
+        StringBuilder guiones = new StringBuilder();
+        for (int i = 0; i < passwordOrdenada.length(); i++) {
+            guiones.append("-");
+        }
+        System.out.println(guiones);
+        printarMatrix(mat1,"Matriz Ordenada y rellenada");
 
         String [][] mat2 = new String[filas][columnas];
-        StringBuilder key2 = new StringBuilder();
-        key2.append(passwordOrdenada);
 
-        for (int i = 0; i < key1.length(); i++) {
 
-            int posi = key2.toString().indexOf(key1.charAt(i));
-            key2.replace(posi,posi+1,"#");
+        for (int i = 0; i < indices.length; i++) {
 
-            for (int j = 0; j < mat2.length; j++) {
-                mat2[j][posi] = mat1[j][i];
-                System.out.print(mat2[j][posi]);
+            int posi = indices[i];
+            for (int j = 0; j < filas; j++) {
+                mat2[j][posi]= mat1[j][i];
             }
-            System.out.println();
+
         }
-        printarMatrix(mat2,"mat2");
+
+
+
+
+        System.out.println(key);
+        printarMatrix(mat2,"matriz 2");
 
         for (int i = 0; i < mat2.length; i++) {
             for (int j = 0; j < mat2[0].length; j++) {
@@ -263,7 +267,6 @@ public class Transposition {
                 }
             }
         }
-
 
 
         return devolucion.toString();
