@@ -161,12 +161,121 @@ public class Transposition {
     }
 
     static String decypher(String s, String key) {
+        StringBuilder devolucion = new StringBuilder();
+        int columnas = key.length(), filas = s.length()/columnas;
+        double x =(double) s.length()/columnas;
+        if (x>filas){
+            filas++;
+        }
+        int numNulls = (filas*columnas) - s.length() ;
+
+        System.out.println(columnas+"col\n"+filas+"fil\n"+numNulls+"nulls");
+
+        String [][] matriz = new String[filas][columnas];
+        if (numNulls>0){
+            System.out.println(numNulls);
+            for (int i = numNulls; i >0 ; i--) {
+                matriz[filas-1][i]="*";
+
+            }
+            printarMatrix(matriz,"bac");
+        }
+
+        //Aqui lo que hacemos es ordenar la password
+        int [] letras = new int[key.length()];
+        StringBuilder passwordOrdenada = new StringBuilder();
+
+        for (int i = 0; i < letras.length; i++) {
+            letras[i] = key.charAt(i);
+        }
+        int[] letrasOrdenadas = ordenarArrayDoble(letras);
+        char a;
+        for (int i = 0; i < letrasOrdenadas.length; i++) {
+            a = (char) letrasOrdenadas[i];
+            passwordOrdenada.append(a);
+        }
 
 
 
 
-        return "";
+
+        String [][] mat1 = new String[filas][columnas];
+        StringBuilder key1 = new StringBuilder();
+        key1.append(key);
+        for (int z = 0; z < passwordOrdenada.length(); z++) {
+            int posicion = key1.toString().indexOf(passwordOrdenada.charAt(z));
+            key1.replace(posicion,posicion+1,"$");
+
+            for (int j = 0; j < filas; j++) {
+                mat1[j][posicion] = matriz[j][z];
+            }
+        }
+
+        //Restablecemos la key a la por defecto
+        key1.delete(0,key1.length());
+        key1.append(key);
+
+
+
+
+
+        int contador = 0;
+        for (int i = 0; i < columnas; i++) {
+            for (int j = 0; j < filas; j++) {
+                if (contador < s.length()){
+                    if (mat1[j][i]!="*"){
+                        StringBuilder c = new StringBuilder();
+                        c.append(s.charAt(contador));
+                        mat1[j][i] = c.toString();
+                        c.delete(0,c.length()-1);
+                    }else {
+                        continue;
+                    }
+                    contador++;
+                }
+            }
+        }
+
+        printarMatrix(mat1,"kkkk");
+
+
+        String [][] mat2 = new String[filas][columnas];
+        StringBuilder key2 = new StringBuilder();
+        key2.append(passwordOrdenada);
+
+        for (int i = 0; i < key1.length(); i++) {
+
+            int posi = key2.toString().indexOf(key1.charAt(i));
+            key2.replace(posi,posi+1,"#");
+
+            for (int j = 0; j < mat2.length; j++) {
+                mat2[j][posi] = mat1[j][i];
+                System.out.print(mat2[j][posi]);
+            }
+            System.out.println();
+        }
+        printarMatrix(mat2,"mat2");
+
+        for (int i = 0; i < mat2.length; i++) {
+            for (int j = 0; j < mat2[0].length; j++) {
+                if (mat2[i][j]!="*"){
+                    devolucion.append(mat2[i][j]);
+                }
+            }
+        }
+
+
+
+        return devolucion.toString();
     }
+
+
+
+
+
+
+
+
 
     public static String[][] crearMatrix(int nFilas, int nCol, String s){
 

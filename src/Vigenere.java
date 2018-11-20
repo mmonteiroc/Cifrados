@@ -1,6 +1,7 @@
 
 public class Vigenere {
 
+
     static String encode(String s, String password) {
         password = password.toUpperCase();
         s = s.toUpperCase();
