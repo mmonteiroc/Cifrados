@@ -1,18 +1,34 @@
+/**
+ * @author mmonteiro
+ * @project Cifrados
+ */
 public class Transposition {
 
 
+    /**
+     * @param s
+     * @param dim
+     * @return Devuelve un Stirng Cifrado
+     *
+     * Esta funcion recibe un String a cifrar y una dimension de la matriz, la dimension (DIM)
+     * Definira el numero de columnas de la matriz
+     * Deduiremos cuantas filas necesitaremos dividiendo la longitud del String entre la dimension que nos pasen
+     *
+     * Rellenaremos posicion a posicion la matriz caracter a caracter de nuestra string en horizontal fila por fila
+     * Una vez la tengamos rellenada iremos columna por columna leyendo verticalmente y asi tendremos la frase cifrada
+     *
+     */
     static String cypher(String s, int dim) {
-
         StringBuilder devolver = new StringBuilder();
         int nColumnas = dim, nFilas = s.length()/nColumnas;
         double x = (double) s.length()/nColumnas;
 
+        //Si la fila es decimal, añadiremos una fila mas ya que no podemos tener una fila y media
         if (x>nFilas){
             nFilas++;
         }
 
         String [][] matrix = crearMatrix(nFilas,nColumnas,s);
-
         String[][] newMatrix = new  String[matrix[0].length][matrix.length];
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j <matrix[0].length ; j++) {
