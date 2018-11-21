@@ -5,38 +5,31 @@
 public class PlayFair {
 
     public static void main(String[] args) {
-        encrypt("hola mundo","holaaao  ekaleessxwq!");
+        encrypt("hola, soy migúuágel, como estas?","holaaao  ekaleessxwq!");
     }
 
 
     public static String encrypt(String text, String pass) {
         String[] letras = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W","X", "Y", "Z"};
         StringBuilder passwordCorrecta = new StringBuilder();
-
-        StringBuilder fraseLimpia = new StringBuilder();
+        StringBuilder passLimpia = new StringBuilder();
         pass = pass.toUpperCase();
+        StringBuilder devolucion = new StringBuilder();
+
         // Aqui lo que hacemos es comprobar si lleva algun caracter especial la passwrd, en el caso de
         // que sea asi, se eliminan los caracteres especiales
-        for (int i = 0; i < pass.length(); i++) {
-            if (pass.charAt(i) >= 65 && pass.charAt(i)<=90){
-                fraseLimpia.append(pass.charAt(i));
-            }else{
-                char c = caracterEspecial(pass.charAt(i));
-                if (c>= 65 && c<=90){
-                    fraseLimpia.append(c);
-                }
-            }
-        }
+
+        passLimpia.append(limpiarFrase(pass));
 
         //Aqui hacemos que la password no tenga ningun caracter repetido
         //EX: ARANYA = ARNY
-        for (int i = 0; i < fraseLimpia.length(); i++) {
+        for (int i = 0; i < passLimpia.length(); i++) {
             StringBuilder c = new StringBuilder() ;
-            c.append(fraseLimpia.charAt(i));
+            c.append(passLimpia.charAt(i));
             if (passwordCorrecta.toString().contains(c.toString())){
                 continue;
             }else {
-                passwordCorrecta.append(fraseLimpia.charAt(i));
+                passwordCorrecta.append(passLimpia.charAt(i));
             }
         }
 
@@ -82,11 +75,33 @@ public class PlayFair {
                 }
             }
         }
-
-
         Transposition.printarMatrix(matriz,"matrix");
+        //Hasta este punto lo que tenemos hecho es la matriz para cifrar rellenada.
 
-        return "";
+        StringBuilder fraseLimpia = new StringBuilder();
+        fraseLimpia.append(limpiarFrase(text.toUpperCase()));
+        System.out.println(fraseLimpia.toString()+"\nfrase limpia");
+
+        StringBuilder fraseAdos = new StringBuilder();
+
+        //Esto lo que hace es separarnos la frase de dos letras en dos letras separando
+        // cada dos lestras con un espacio.
+        for (int i = 0,q=0; i < fraseLimpia.length(); i++,q++) {
+            if (q<2){
+                fraseAdos.append(fraseLimpia.charAt(i));
+            }else {
+                q=0;
+                fraseAdos.append(" "+fraseLimpia.charAt(i));
+            }
+        }
+
+        System.out.println(fraseAdos.toString()+"\nfrase a dos");
+
+
+
+
+
+        return devolucion.toString();
     }
 
     public static String decrypt(String text, String pass) {
@@ -98,16 +113,21 @@ public class PlayFair {
 
 
 
-
-
-
-
-
-
-
-
-
-
+    //Funciones para limpiar las frases
+    public static String  limpiarFrase(String frase){
+        StringBuilder devolver = new StringBuilder();
+        for (int i = 0; i < frase.length(); i++) {
+            if (frase.charAt(i) >= 65 && frase.charAt(i)<=90){
+                devolver.append(frase.charAt(i));
+            }else{
+                char c = caracterEspecial(frase.charAt(i));
+                if (c>= 65 && c<=90){
+                    devolver.append(c);
+                }
+            }
+        }
+        return devolver.toString();
+    }
     public static char caracterEspecial (char a){
         switch (a){
             case 'Á': case 'À':
