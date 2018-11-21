@@ -1,3 +1,4 @@
+
 /**
  * @author mmonteiro
  * @project Cifrados
@@ -5,7 +6,7 @@
 public class PlayFair {
 
     public static void main(String[] args) {
-        encrypt("hola, soy migúuágel, como estas?","holaaao  ekaleessxwq!");
+        encrypt("hola, soy mdigúuágel, como estas?","murcielago");
     }
 
 
@@ -82,6 +83,18 @@ public class PlayFair {
         fraseLimpia.append(limpiarFrase(text.toUpperCase()));
         System.out.println(fraseLimpia.toString()+"\nfrase limpia");
 
+        for (int i = 1,j=0; i < fraseLimpia.length(); i++,j++) {
+            char caracter1 = fraseLimpia.charAt(i);
+            char caracter2 = fraseLimpia.charAt(j);
+            if (caracter1 == caracter2){
+                fraseLimpia.replace(j+1,i,"X");
+            }
+        }
+
+        if  (fraseLimpia.length()%2 != 0){
+            fraseLimpia.append("X");
+        }
+
         StringBuilder fraseAdos = new StringBuilder();
 
         //Esto lo que hace es separarnos la frase de dos letras en dos letras separando
@@ -97,7 +110,16 @@ public class PlayFair {
 
         System.out.println(fraseAdos.toString()+"\nfrase a dos");
 
+        for (int i = 0,j=1; i < fraseLimpia.length()/2; i++,j++) {
+            
+            int[] filcol = saberFilCol(matriz, fraseAdos.charAt(i));
+            int[] filcol1 = saberFilCol(matriz,fraseAdos.charAt(j));
 
+
+            
+            i+=2;
+            j+=2;
+        }
 
 
 
@@ -108,6 +130,25 @@ public class PlayFair {
 
 
         return "";
+    }
+
+
+
+
+
+    public static int[] saberFilCol(String[][] matriz, char c){
+
+        int [] devo = new int[2];
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[0].length; j++) {
+                StringBuilder cc = new StringBuilder();
+                cc.append(c);
+                if (cc.toString() == matriz[i][j]){
+                    return new int[]{i,j};
+                }
+            }
+        }
+        return null;
     }
 
 

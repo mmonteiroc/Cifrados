@@ -9,6 +9,7 @@ public class Vigenere {
         StringBuilder passwordCompleta = new StringBuilder(crearPasswd(password,s));
 
         StringBuilder newS = new StringBuilder();
+        //Limpiamos la frase sin acentos
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) >= 65 && s.charAt(i)<=90){
                 newS.append(s.charAt(i));
@@ -107,6 +108,8 @@ public class Vigenere {
         StringBuilder passwordCompleta = new StringBuilder();
 
         for (int i = 0,j=0; i < s.length(); i++) {
+
+            //Si el caracter se ha de cifrar
             if ((s.charAt(i) >= 65 && s.charAt(i)<=90) || (s.charAt(i)>=192 && s.charAt(i)<=220)){
 
                 //s.charAt(i) >= 65 && s.charAt(i)<=90
@@ -122,6 +125,7 @@ public class Vigenere {
                 }
                 j++;
 
+                //Si el caracter no se ha de cifrar
             }else {
                 passwordCompleta.append(' ');
             }
