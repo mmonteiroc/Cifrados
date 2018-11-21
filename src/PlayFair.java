@@ -11,11 +11,128 @@ public class PlayFair {
 
 
     public static String encrypt(String text, String pass) {
+        StringBuilder devolucion = new StringBuilder();
+
+        String[][]matriz=crearMatriz(pass);
+        Transposition.printarMatrix(matriz,"matrix");
+        //Hasta este punto lo que tenemos hecho es la matriz para cifrar rellenada.
+
+        StringBuilder fraseLimpia = new StringBuilder();
+        fraseLimpia.append(limpiarFrase(text.toUpperCase()));
+        System.out.println(fraseLimpia.toString()+"\nfrase limpia");
+
+        for (int i = 1,j=0; i < fraseLimpia.length(); i++,j++) {
+            char caracter1 = fraseLimpia.charAt(i);
+            char caracter2 = fraseLimpia.charAt(j);
+            if (caracter1 == caracter2){
+                fraseLimpia.replace(j+1,i,"X");
+            }
+        }
+
+        if  (fraseLimpia.length()%2 != 0){
+            if (fraseLimpia.charAt(fraseLimpia.length()-1) == 'X'){
+                fraseLimpia.append("I");
+            }else {
+                fraseLimpia.append("X");
+            }
+        }
+
+        StringBuilder fraseAdos = new StringBuilder();
+
+        //Esto lo que hace es separarnos la frase de dos letras en dos letras separando
+        // cada dos lestras con un espacio.
+        for (int i = 0,q=0; i < fraseLimpia.length(); i++,q++) {
+            if (q<2){
+                fraseAdos.append(fraseLimpia.charAt(i));
+            }else {
+                q=0;
+                fraseAdos.append(" "+fraseLimpia.charAt(i));
+            }
+        }
+
+        System.out.println(fraseAdos.toString()+"\nfrase a dos");
+
+        int numero = fraseLimpia.length()/2;
+        for (int i = 0,j=1,w=0; w < numero; w++, i++,j++) {
+            
+            int[] filcol = saberFilCol(matriz, fraseAdos.charAt(i));
+            int[] filcol1 = saberFilCol(matriz,fraseAdos.charAt(j));
+
+            if  (filcol[0] == filcol1[0]){
+                //Si tienen misma fila
+
+                if (filcol[1] >= 4){
+                    devolucion.append(matriz[filcol[0]][0]);
+
+                }else {
+                    devolucion.append(matriz[filcol[0]][filcol[1]+1]);
+
+                }
+
+                if (filcol1[1]>=4){
+                    devolucion.append(matriz[filcol1[0]]    [0]);
+                }else {
+                    devolucion.append(matriz[filcol1[0]]    [filcol1[1]+1]);
+                }
+
+
+
+            }else if (filcol[1] == filcol1[1]){
+                //Si tienen misma columna
+                //Se baja una fila pero no cambia la columna
+
+                if (filcol[0] >= 4){
+                    devolucion.append(matriz[0][filcol[1]]);
+                }else {
+                    devolucion.append(matriz[filcol[0]+1]    [filcol[1]]);
+                }
+
+                if (filcol1[0] >= 4){
+                    devolucion.append(matriz[0][filcol1[1]]);
+                }else {
+                    devolucion.append(matriz[filcol1[0]+1]   [filcol1[1]]);
+                }
+
+
+            }else {
+                //Si no tienen misma fila ni misma columna
+
+                devolucion.append(matriz[filcol[0]][filcol1[1]]);
+                devolucion.append(matriz[filcol1[0]][filcol[1]]);
+
+            }
+
+            
+            i+=2;
+            j+=2;
+
+
+            devolucion.append(" ");
+        }
+
+        devolucion.deleteCharAt(devolucion.length()-1);
+
+        System.out.println("Esta es la devolucion \n|"+devolucion.toString()+"|\nlas barras definen donde empieza y donde acaba\nasi podemos saber si hay algun espacio");
+        return devolucion.toString();
+    }
+
+    public static String decrypt(String text, String pass) {
+
+
+        return " ";
+    }
+
+
+
+
+
+
+
+    public static String[][] crearMatriz(String pass){
+        pass = pass.toUpperCase();
         String[] letras = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W","X", "Y", "Z"};
         StringBuilder passwordCorrecta = new StringBuilder();
         StringBuilder passLimpia = new StringBuilder();
-        pass = pass.toUpperCase();
-        StringBuilder devolucion = new StringBuilder();
 
         // Aqui lo que hacemos es comprobar si lleva algun caracter especial la passwrd, en el caso de
         // que sea asi, se eliminan los caracteres especiales
@@ -59,6 +176,9 @@ public class PlayFair {
         int contador = 0;
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
+                if (i < 0){
+                    i++;
+                }
                 if (matriz[i][j]==null){
 
                     if  (passwdMAY.toString().contains(letras[contador])){
@@ -76,102 +196,7 @@ public class PlayFair {
                 }
             }
         }
-        Transposition.printarMatrix(matriz,"matrix");
-        //Hasta este punto lo que tenemos hecho es la matriz para cifrar rellenada.
-
-        StringBuilder fraseLimpia = new StringBuilder();
-        fraseLimpia.append(limpiarFrase(text.toUpperCase()));
-        System.out.println(fraseLimpia.toString()+"\nfrase limpia");
-
-        for (int i = 1,j=0; i < fraseLimpia.length(); i++,j++) {
-            char caracter1 = fraseLimpia.charAt(i);
-            char caracter2 = fraseLimpia.charAt(j);
-            if (caracter1 == caracter2){
-                fraseLimpia.replace(j+1,i,"X");
-            }
-        }
-
-        if  (fraseLimpia.length()%2 != 0){
-            fraseLimpia.append("X");
-        }
-
-        StringBuilder fraseAdos = new StringBuilder();
-
-        //Esto lo que hace es separarnos la frase de dos letras en dos letras separando
-        // cada dos lestras con un espacio.
-        for (int i = 0,q=0; i < fraseLimpia.length(); i++,q++) {
-            if (q<2){
-                fraseAdos.append(fraseLimpia.charAt(i));
-            }else {
-                q=0;
-                fraseAdos.append(" "+fraseLimpia.charAt(i));
-            }
-        }
-
-        System.out.println(fraseAdos.toString()+"\nfrase a dos");
-
-        for (int i = 0,j=1,w=0; w < fraseLimpia.length()/2; w++, i++,j++) {
-            
-            int[] filcol = saberFilCol(matriz, fraseAdos.charAt(i));
-            int[] filcol1 = saberFilCol(matriz,fraseAdos.charAt(j));
-
-            if  (filcol[0] == filcol1[0]){
-                //Si tienen misma fila
-
-                if (filcol[1] >= 4){
-                    devolucion.append(matriz[filcol[0]]  [0]);
-                }else {
-                    devolucion.append(matriz[filcol[0]]  [filcol[1]]);
-                }
-
-                if (filcol1[1]>=4){
-                    devolucion.append(matriz[filcol1[0]][0]);
-                }else {
-                    devolucion.append(matriz[filcol1[0]][filcol1[1]]);
-                }
-
-
-
-            }else if (filcol[1] == filcol1[1]){
-                //Si tienen misma columna
-                //Se baja una fila pero no cambia la columna
-
-                if (filcol[0] >= 4){
-                    devolucion.append(matriz[0][filcol[1]]);
-                }else {
-                    devolucion.append(matriz[filcol[0]][filcol[1]]);
-                }
-
-                if (filcol1[0] >= 4){
-                    devolucion.append(matriz[0][filcol1[1]]);
-                }else {
-                    devolucion.append(matriz[filcol1[0]][filcol1[1]]);
-                }
-
-
-            }else {
-                //Si no tienen misma fila ni misma columna
-
-                devolucion.append(matriz[filcol[0]][filcol1[1]]);
-                devolucion.append(matriz[filcol1[0]][filcol[1]]);
-
-            }
-
-            
-            i+=2;
-            j+=2;
-            devolucion.append(" ");
-        }
-
-
-
-        return devolucion.toString();
-    }
-
-    public static String decrypt(String text, String pass) {
-
-
-        return "";
+        return matriz;
     }
 
 
@@ -222,6 +247,8 @@ public class PlayFair {
                 return 'O';
             case 'Ú': case 'Ù':
                 return 'U';
+            case 'Ç':
+                return 'C';
 
             default:return a;
         }
