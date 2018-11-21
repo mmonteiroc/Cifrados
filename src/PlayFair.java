@@ -110,15 +110,57 @@ public class PlayFair {
 
         System.out.println(fraseAdos.toString()+"\nfrase a dos");
 
-        for (int i = 0,j=1; i < fraseLimpia.length()/2; i++,j++) {
+        for (int i = 0,j=1,w=0; w < fraseLimpia.length()/2; w++, i++,j++) {
             
             int[] filcol = saberFilCol(matriz, fraseAdos.charAt(i));
             int[] filcol1 = saberFilCol(matriz,fraseAdos.charAt(j));
 
+            if  (filcol[0] == filcol1[0]){
+                //Si tienen misma fila
+
+                if (filcol[1] >= 4){
+                    devolucion.append(matriz[filcol[0]]  [0]);
+                }else {
+                    devolucion.append(matriz[filcol[0]]  [filcol[1]]);
+                }
+
+                if (filcol1[1]>=4){
+                    devolucion.append(matriz[filcol1[0]][0]);
+                }else {
+                    devolucion.append(matriz[filcol1[0]][filcol1[1]]);
+                }
+
+
+
+            }else if (filcol[1] == filcol1[1]){
+                //Si tienen misma columna
+                //Se baja una fila pero no cambia la columna
+
+                if (filcol[0] >= 4){
+                    devolucion.append(matriz[0][filcol[1]]);
+                }else {
+                    devolucion.append(matriz[filcol[0]][filcol[1]]);
+                }
+
+                if (filcol1[0] >= 4){
+                    devolucion.append(matriz[0][filcol1[1]]);
+                }else {
+                    devolucion.append(matriz[filcol1[0]][filcol1[1]]);
+                }
+
+
+            }else {
+                //Si no tienen misma fila ni misma columna
+
+                devolucion.append(matriz[filcol[0]][filcol1[1]]);
+                devolucion.append(matriz[filcol1[0]][filcol[1]]);
+
+            }
 
             
             i+=2;
             j+=2;
+            devolucion.append(" ");
         }
 
 
@@ -138,12 +180,11 @@ public class PlayFair {
 
     public static int[] saberFilCol(String[][] matriz, char c){
 
-        int [] devo = new int[2];
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
                 StringBuilder cc = new StringBuilder();
                 cc.append(c);
-                if (cc.toString() == matriz[i][j]){
+                if (cc.toString().equals(matriz[i][j])  ){
                     return new int[]{i,j};
                 }
             }
