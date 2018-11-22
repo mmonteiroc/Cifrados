@@ -3,8 +3,6 @@
  * @project Cifrados
  */
 public class Transposition {
-
-
     /**
      * @param s
      * @param dim
@@ -49,11 +47,26 @@ public class Transposition {
         return devolver.toString();
     }
 
-    static String cypher(String s, String key) {
+
+    /**
+     * @param Frase
+     * @param clave
+     * @return devolvemos una String cifrada
+     *
+     * Esta funcion recibe un String a cifrar y una clave, esa clave (su longitud) definira la dimension de la matriz la cual
+     * definira el numero de columnas de la matriz
+     * Deduiremos cuantas filas necesitaremos dividiendo la longitud del Frase a cifrar entre la dimension que nos pasen
+     *
+     * Rellenaremos posicion a posicion la matriz caracter a caracter de nuestra string en horizontal fila por fila
+     * Una vez la tengamos rellenada reordenaremos la matriz (moviendo sus columnas) por orden alfabetico de la clave e
+     * iremos columna por columna leyendo verticalmente y asi tendremos la frase cifrada
+     *
+     */
+    static String cypher(String Frase, String clave) {
 
         StringBuilder devolucion = new StringBuilder();
-        int columnas = key.length(), filas = s.length()/columnas;
-        double x =(double) s.length()/columnas;
+        int columnas = clave.length(), filas = Frase.length()/columnas;
+        double x =(double) Frase.length()/columnas;
         if (x>filas){
             filas++;
         }
@@ -69,12 +82,14 @@ public class Transposition {
 
          */
 
+
+        //Aqui rellenamos la matriz con la frase a cifrar
         int ñ = 0;
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
-                if (ñ < s.length()){
+                if (ñ < Frase.length()){
                     StringBuilder c = new StringBuilder();
-                    c.append(s.charAt(ñ));
+                    c.append(Frase.charAt(ñ));
                     matriz[i][j] = c.toString();
                     c.delete(0,c.length()-1);
                     ñ++;
@@ -82,11 +97,11 @@ public class Transposition {
             }
         }
 
-        int [] letras = new int[key.length()];
+        int [] letras = new int[clave.length()];
         StringBuilder passwordOrdenada = new StringBuilder();
 
         for (int i = 0; i < letras.length; i++) {
-            letras[i] = key.charAt(i);
+            letras[i] = clave.charAt(i);
         }
         int[] letrasOrdenadas = ordenarArrayDoble(letras);
         char a;
@@ -96,8 +111,9 @@ public class Transposition {
         }
 
 
+        //Aqui lo que hacemos es ordenarla con la clave
         StringBuilder key1 = new StringBuilder();
-        key1.append(key);
+        key1.append(clave);
         System.out.println(key1.toString());
         for (int i = 0; i <passwordOrdenada.length() ; i++) {
 
@@ -109,39 +125,44 @@ public class Transposition {
                     devolucion.append(matriz[j][posicion]);
                 }
             }
-
-
-
         }
-
-        printarMatrix(matriz,"matriz con key");
-
         return devolucion.toString();
     }
 
 
-    static String decypher(String s, int dim) {
+    /**
+     * @param FraseCifrada
+     * @param dimension
+     * @return Frase descifrada
+     *
+     * Esta funcion recibe dos paramtros, uno que es la frase cifrada que queremos descifrar,
+     * y otro que es la dimension que se ha usado para cifrarla.
+     * Lo primero que haremos sera deduir si necesitaremos añadir algun null o no
+     * Despues deduiremos el numero de filas que usaremos para la matriz
+     * Crearemos la matriz y por el final añadiremos los nulls que sabemos que necesitaremos
+     * Despues iremos verticalmente escribiendo en la matriz la frase que nos han pasado y para
+     * descifrarla la leeremos horizontalmente linea a linea
+     */
+    static String decypher(String FraseCifrada, int dimension) {
 
         //Contador que nos dira cuntos espacios tenemos
         int cont = 0;
         int contador = 0;
 
         //Comprobaremos si necesitaremos caracteres especiales para los nulls
-        while ((s.length() + cont) % dim != 0){
+        while ((FraseCifrada.length() + cont) % dimension != 0){
             cont++;
         }
 
         //Miramos si es decimal, y si lo es lo incrementamos hacia arriba
-        double conDecimales = (double) s.length()/dim;
-        int row = s.length()/dim;
-        if (conDecimales>row){
-            row++;
+        double conDecimales = (double) FraseCifrada.length()/dimension;
+        int filas = FraseCifrada.length()/dimension;
+        if (conDecimales>filas){
+            filas++;
         }
 
-
-
-        char[][] matrix = new char[row][dim];
-        StringBuilder result = new StringBuilder();
+        char[][] matrix = new char[filas][dimension];
+        StringBuilder devolver = new StringBuilder();
 
         //donde tenemos nulls ponemos un '*'
         if (cont > 0) {
@@ -156,33 +177,42 @@ public class Transposition {
         }
 
         //Insertamos los caracteres del string uno a uno saltandonos las posiciones de los '*'
+        //Los insertaremos verticalmente columna por columna
         for (int i = 0; i < matrix[0].length; i++) {
             for (int k = 0; k < matrix.length; k++) {
                 if (matrix[k][i] == '*'){continue;}
-                matrix[k][i] = s.charAt(contador);
+                matrix[k][i] = FraseCifrada.charAt(contador);
                 contador++;
             }
         }
 
-        //Añadimos los caracteres de la matriz verticalmente ignorando los asteriscos
+        //Añadimos los caracteres de la matriz verticalmente a nuestra string
+        // que retornaremos ignorando los asteriscos
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j] == '*'){ continue;}
-                result.append(matrix[i][j]);
+                devolver.append(matrix[i][j]);
             }
         }
 
-        return result.toString();
+        return devolver.toString();
     }
 
-    static String decypher(String s, String key) {
+
+
+    /**
+     * @param FraseCifrada
+     * @param key
+     * @return
+     */
+    static String decypher(String FraseCifrada, String key) {
         StringBuilder devolucion = new StringBuilder();
-        int columnas = key.length(), filas = s.length()/columnas;
-        double x =(double) s.length()/columnas;
+        int columnas = key.length(), filas = FraseCifrada.length()/columnas;
+        double x =(double) FraseCifrada.length()/columnas;
         if (x>filas){
             filas++;
         }
-        int numNulls = (filas*columnas) - s.length() ;
+        int numNulls = (filas*columnas) - FraseCifrada.length() ;
 
         System.out.println("\n\n\n\n\n"+columnas+"col\n"+filas+"fil\n"+numNulls+"nulls");
 
@@ -194,7 +224,6 @@ public class Transposition {
                 matriz[filas-1][p]="*";
                 p--;
             }
-            printarMatrix(matriz,"bac");
         }
 
         //Aqui lo que hacemos es ordenar la password
@@ -226,20 +255,17 @@ public class Transposition {
         }
 
         System.out.println(passwordOrdenada);
-        printarMatrix(mat1,"Matriz ordenada solo nulls");
         //Restablecemos la key a la por defecto
         key1.delete(0,key1.length());
         key1.append(key);
 
-
-
         int contador = 0;
         for (int i = 0; i < columnas; i++) {
             for (int j = 0; j < filas; j++) {
-                if (contador < s.length()){
+                if (contador < FraseCifrada.length()){
                     if (mat1[j][i]!="*"){
                         StringBuilder c = new StringBuilder();
-                        c.append(s.charAt(contador));
+                        c.append(FraseCifrada.charAt(contador));
                         mat1[j][i] = c.toString();
                         c.delete(0,c.length()-1);
                     }else {
@@ -256,7 +282,6 @@ public class Transposition {
             guiones.append("-");
         }
         System.out.println(guiones);
-        printarMatrix(mat1,"Matriz Ordenada y rellenada");
 
         String [][] mat2 = new String[filas][columnas];
 
@@ -270,12 +295,6 @@ public class Transposition {
 
         }
 
-
-
-
-        System.out.println(key);
-        printarMatrix(mat2,"matriz 2");
-
         for (int i = 0; i < mat2.length; i++) {
             for (int j = 0; j < mat2[0].length; j++) {
                 if (mat2[i][j]!="*"){
@@ -283,19 +302,15 @@ public class Transposition {
                 }
             }
         }
-
-
         return devolucion.toString();
     }
 
 
 
+    //Funciones adicionales que usan nuestro algoritmo
 
-
-
-
-
-
+    //Esta funcion lo que hace es crearnos una matrix
+    //Rellenada por la string que le pasemos
     public static String[][] crearMatrix(int nFilas, int nCol, String s){
 
         int contador = 0;
@@ -313,22 +328,6 @@ public class Transposition {
             }
         }
         return matrix;
-    }
-
-
-    public static void printarMatrix(String[][] mat, String n){
-        for (int i = 0; i < mat.length; i++) {
-            for (int j = 0; j < mat[0].length; j++) {
-                if (mat[i][j]!=null){
-                    System.out.print(mat[i][j]);
-                }else {
-                    System.out.print("+");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println(n+"\n");
-
     }
 
     public static int[] ordenarArrayDoble(int[] array) {
