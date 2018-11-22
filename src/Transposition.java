@@ -203,7 +203,16 @@ public class Transposition {
     /**
      * @param FraseCifrada
      * @param key
-     * @return
+     * @return devolveremos una string la cual sera la frase descifrada
+     *
+     * Lo primero que haremos sera deduir el numero de columnas, fillas y nulls que tendremos que añadir
+     * despues crearemos la matriz vacia con ese num de filas y columnas
+     *
+     * Una vez creada, rellenaremos por el final los nulls que necesitemos,
+     * ordenaremos la matriz con la passwd y rellenaremos verticalmente evitando los nulls
+     * con la string cifrada que nos han pasado
+     * Despues volveremos a ordenarla pero esta vez con el orden original de la clave y leeremos
+     * horizontalmente para recibir la frase descifrada
      */
     static String decypher(String FraseCifrada, String key) {
         StringBuilder devolucion = new StringBuilder();
@@ -213,8 +222,6 @@ public class Transposition {
             filas++;
         }
         int numNulls = (filas*columnas) - FraseCifrada.length() ;
-
-        System.out.println("\n\n\n\n\n"+columnas+"col\n"+filas+"fil\n"+numNulls+"nulls");
 
         String [][] matriz = new String[filas][columnas];
         if (numNulls>0){
@@ -330,6 +337,8 @@ public class Transposition {
         return matrix;
     }
 
+
+    //Esta funcion recibe un array de INT y te los ordena de menor a mayor
     public static int[] ordenarArrayDoble(int[] array) {
 
         for (int i=array.length, x=0; i>x; i--, x++) {
