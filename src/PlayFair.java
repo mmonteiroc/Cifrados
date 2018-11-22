@@ -4,11 +4,6 @@
  */
 public class PlayFair {
 
-    public static void main(String[] args) {
-        encrypt("hola, soy mdigúuágel, como estas?","murcielago");
-    }
-
-
     public static String encrypt(String text, String pass) {
         StringBuilder devolucion = new StringBuilder();
 
@@ -17,7 +12,6 @@ public class PlayFair {
 
         StringBuilder fraseLimpia = new StringBuilder();
         fraseLimpia.append(limpiarFrase(text.toUpperCase()));
-        System.out.println(fraseLimpia.toString()+"\nfrase limpia");
 
         for (int i = 1,j=0; i < fraseLimpia.length(); i++,j++) {
             char caracter1 = fraseLimpia.charAt(i);
@@ -48,7 +42,6 @@ public class PlayFair {
             }
         }
 
-        System.out.println(fraseAdos.toString()+"\nfrase a dos");
 
         int numero = fraseLimpia.length()/2;
         for (int i = 0,j=1,w=0; w < numero; w++, i++,j++) {
@@ -61,10 +54,8 @@ public class PlayFair {
 
                 if (filcol[1] >= 4){
                     devolucion.append(matriz[filcol[0]][0]);
-
                 }else {
                     devolucion.append(matriz[filcol[0]][filcol[1]+1]);
-
                 }
 
                 if (filcol1[1]>=4){
@@ -110,7 +101,6 @@ public class PlayFair {
 
         devolucion.deleteCharAt(devolucion.length()-1);
 
-        System.out.println("Esta es la devolucion \n|"+devolucion.toString()+"|\nlas barras definen donde empieza y donde acaba\nasi podemos saber si hay algun espacio");
         return devolucion.toString();
     }
 
@@ -118,13 +108,6 @@ public class PlayFair {
         StringBuilder devolucion = new StringBuilder();
         String[][]matriz=crearMatriz(pass);
         //Hasta este punto lo que tenemos hecho es la matriz para cifrar rellenada.
-
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz.length; j++) {
-                System.out.print(matriz[i][j]);
-            }
-            System.out.println();
-        }
 
 
 
