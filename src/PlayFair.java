@@ -13,7 +13,6 @@ public class PlayFair {
         StringBuilder devolucion = new StringBuilder();
 
         String[][]matriz=crearMatriz(pass);
-        Transposition.printarMatrix(matriz,"matrix");
         //Hasta este punto lo que tenemos hecho es la matriz para cifrar rellenada.
 
         StringBuilder fraseLimpia = new StringBuilder();
@@ -116,9 +115,72 @@ public class PlayFair {
     }
 
     public static String decrypt(String text, String pass) {
+        StringBuilder devolucion = new StringBuilder();
+        String[][]matriz=crearMatriz(pass);
+        //Hasta este punto lo que tenemos hecho es la matriz para cifrar rellenada.
 
 
-        return " ";
+        StringBuilder newText = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i)!=' '){
+                newText.append(text.charAt(i));
+            }
+        }
+
+
+        for (int i = 0,j=1,x=0; x< newText.length()/2; x++, i++, j++) {
+            int[] filcol = saberFilCol(matriz, newText.charAt(i));
+            int[] filcol1 = saberFilCol(matriz,newText.charAt(j));
+
+            if (filcol[0] == filcol1[0]){
+                //misma fila
+                //Primera letra
+                if (filcol[1] == 0){
+                    devolucion.append(matriz[filcol[0]][4]);
+                }else {
+                    devolucion.append(matriz[filcol[0]][filcol[1]-1]);
+                }
+                //Segunda letra
+                if (filcol1[1] == 0){
+                    devolucion.append(matriz[filcol1[0]][4]);
+                }else {
+                    devolucion.append(matriz[filcol1[0]][filcol1[1]-1]);
+                }
+
+
+            }else if (filcol[1] == filcol1[1]){
+                //misma columna
+
+                //Primera letra
+                if (filcol[0]  == 0){
+                    devolucion.append(matriz[4][filcol[1]]);
+                }else {
+                    devolucion.append(matriz[filcol[0]-1][filcol[1]]);
+                }
+
+                //Segunda letra
+                if (filcol[0]  == 0){
+                    devolucion.append(matriz[4][filcol[1]]);
+                }else {
+                    devolucion.append(matriz[filcol[0]-1][filcol[1]]);
+                }
+
+
+            }else {
+                //No coincide ninguna
+                devolucion.append(matriz[filcol[0]][filcol1[1]]);
+                devolucion.append(matriz[filcol1[0]][filcol[1]]);
+
+            }
+
+            i+=2;
+            j+=2;
+
+            devolucion.append(" ");
+        }
+
+
+        return devolucion.toString();
     }
 
 

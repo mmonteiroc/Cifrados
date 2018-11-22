@@ -114,7 +114,7 @@ public class Transposition {
         //Aqui lo que hacemos es ordenarla con la clave
         StringBuilder key1 = new StringBuilder();
         key1.append(clave);
-        System.out.println(key1.toString());
+
         for (int i = 0; i <passwordOrdenada.length() ; i++) {
 
             int posicion = key1.toString().indexOf(passwordOrdenada.charAt(i));
@@ -225,7 +225,6 @@ public class Transposition {
 
         String [][] matriz = new String[filas][columnas];
         if (numNulls>0){
-            System.out.println(numNulls);
             int p = columnas-1;
             for (int i = numNulls; i >0 ; i--) {
                 matriz[filas-1][p]="*";
@@ -261,7 +260,6 @@ public class Transposition {
 
         }
 
-        System.out.println(passwordOrdenada);
         //Restablecemos la key a la por defecto
         key1.delete(0,key1.length());
         key1.append(key);
@@ -283,12 +281,10 @@ public class Transposition {
             }
         }
 
-        System.out.println(passwordOrdenada);
         StringBuilder guiones = new StringBuilder();
         for (int i = 0; i < passwordOrdenada.length(); i++) {
             guiones.append("-");
         }
-        System.out.println(guiones);
 
         String [][] mat2 = new String[filas][columnas];
 
