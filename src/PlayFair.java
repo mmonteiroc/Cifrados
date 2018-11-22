@@ -119,6 +119,14 @@ public class PlayFair {
         String[][]matriz=crearMatriz(pass);
         //Hasta este punto lo que tenemos hecho es la matriz para cifrar rellenada.
 
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz.length; j++) {
+                System.out.print(matriz[i][j]);
+            }
+            System.out.println();
+        }
+
+
 
         StringBuilder newText = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
@@ -129,8 +137,8 @@ public class PlayFair {
 
 
         for (int i = 0,j=1,x=0; x< newText.length()/2; x++, i++, j++) {
-            int[] filcol = saberFilCol(matriz, newText.charAt(i));
-            int[] filcol1 = saberFilCol(matriz,newText.charAt(j));
+            int[] filcol = saberFilCol(matriz,text.charAt(i));
+            int[] filcol1 = saberFilCol(matriz,text.charAt(j));
 
             if (filcol[0] == filcol1[0]){
                 //misma fila
@@ -159,10 +167,10 @@ public class PlayFair {
                 }
 
                 //Segunda letra
-                if (filcol[0]  == 0){
-                    devolucion.append(matriz[4][filcol[1]]);
+                if (filcol1[0]  == 0){
+                    devolucion.append(matriz[4][filcol1[1]]);
                 }else {
-                    devolucion.append(matriz[filcol[0]-1][filcol[1]]);
+                    devolucion.append(matriz[filcol1[0]-1][filcol1[1]]);
                 }
 
 
@@ -178,7 +186,16 @@ public class PlayFair {
 
             devolucion.append(" ");
         }
+        devolucion.deleteCharAt(devolucion.length()-1);
 
+        char c1 = devolucion.charAt(devolucion.length()-2);
+        char c2 = devolucion.charAt(devolucion.length()-1);
+        int pos1 = devolucion.length()-1;
+        int pos2 =devolucion.length();
+
+        if (c1 == c2){
+            devolucion.replace(pos1,pos2,"X");
+        }
 
         return devolucion.toString();
     }
