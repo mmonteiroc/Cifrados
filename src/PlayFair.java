@@ -50,33 +50,47 @@ public class PlayFair {
             }
         }
 
+
+        /*
+        int longi = fraseLimpia.length();
+        int contador=0;
+        int [] posiciones = new int[fraseLimpia.length()];
+        for (int i = 1; i < longi; i+=2) {
+
+            char caracter1 = fraseLimpia.charAt(i-1);
+            char caracter2 = fraseLimpia.charAt(i);
+
+            if (caracter1 == caracter2){
+                posiciones[contador]=i;
+                contador++;
+            }
+
+        }
+
+        for (int i = 0; i <contador ; i++) {
+            fraseLimpia.replace(posiciones[i],posiciones[i],"X");
+        }
+
+        */
+
+
+
+        int longitud = fraseLimpia.length();
         if  (fraseLimpia.length()%2 != 0){
             if (fraseLimpia.charAt(fraseLimpia.length()-1) == 'X'){
-                fraseLimpia.append("I");
+                fraseLimpia.append("S");
             }else {
                 fraseLimpia.append("X");
             }
         }
 
-        StringBuilder fraseAdos = new StringBuilder();
 
-        //Esto lo que hace es separarnos la frase de dos letras en dos letras separando
-        // cada dos lestras con un espacio.
-        for (int i = 0,q=0; i < fraseLimpia.length(); i++,q++) {
-            if (q<2){
-                fraseAdos.append(fraseLimpia.charAt(i));
-            }else {
-                q=0;
-                fraseAdos.append(" "+fraseLimpia.charAt(i));
-            }
-        }
-
-
-        int numero = fraseLimpia.length()/2;
-        for (int i = 0,j=1,w=0; w < numero; w++, i++,j++) {
+        int numero = fraseLimpia.length();
+        for (int i = 1; i < numero; i+=2) {
             
-            int[] filcol = saberFilCol(matriz, fraseAdos.charAt(i));
-            int[] filcol1 = saberFilCol(matriz,fraseAdos.charAt(j));
+            int[] filcol = saberFilCol(matriz, fraseLimpia.charAt(i-1));
+
+            int[] filcol1 = saberFilCol(matriz,fraseLimpia.charAt(i));
 
             if  (filcol[0] == filcol1[0]){
                 //Si tienen misma fila
@@ -119,11 +133,6 @@ public class PlayFair {
                 devolucion.append(matriz[filcol1[0]][filcol[1]]);
 
             }
-
-            
-            i+=2;
-            j+=2;
-
 
             devolucion.append(" ");
         }
@@ -349,15 +358,15 @@ public class PlayFair {
     }
     public static char caracterEspecial (char a){
         switch (a){
-            case 'Á': case 'À':
+            case 'Á': case 'À': case 'Ä':
                 return 'A';
-            case 'É': case 'È':
+            case 'É': case 'È':case 'Ë':
                 return 'E';
-            case 'Í': case 'Ì':
+            case 'Í': case 'Ì': case 'Ï':
                 return 'I';
-            case 'Ó': case 'Ò':
+            case 'Ó': case 'Ò': case 'Ö':
                 return 'O';
-            case 'Ú': case 'Ù':
+            case 'Ú': case 'Ù': case 'Ü':
                 return 'U';
             case 'Ç':
                 return 'C';
