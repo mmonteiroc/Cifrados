@@ -365,6 +365,4 @@ public class PlayFair {
             default:return a;
         }
     }
-
-
 }
