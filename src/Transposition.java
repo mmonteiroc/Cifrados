@@ -2,6 +2,7 @@
  * @author mmonteiro
  * @project Cifrados
  */
+
 public class Transposition {
     /**
      * @param s

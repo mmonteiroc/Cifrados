@@ -4,6 +4,7 @@
  */
 
 public class Vigenere {
+
     /**
      * @param frase   Es la frase que hemos de codificar
      * @param password Es la password que usaremos para codificar la frase
