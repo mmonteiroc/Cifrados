@@ -4,6 +4,34 @@
  */
 public class PlayFair {
 
+    /**
+     * @param text
+     * @param pass
+     * @return Frase Cifrada
+     *
+     * Este algoritmo lo que hace es, recibir una password la cual usaremos para crear
+     * una matriz unica que esa matriz se usara para cifrar la frase a cifrar
+     *
+     * Tanto la password como la frase se limpian de caracteres especiales como acentos, numeros, signos etc
+     * Si encontramos un J se Cambiara por una I
+     *
+     * Una vez hecho eso, comprobamos si hay caracteres repetidos(seguidos) en la frase a cifrar ya que en ese
+     * caso habra que poner un caracter sin significado en medio que para nosotros sera la X
+     * despues comprobamos si la longitud de la frase (que no tendra ningun espacio) es impar, añadiremos otro
+     * caracter sin sentido que para nosotros volvera a ser la X
+     *
+     * Despues separaremos la frase con espacios en dos letras en dos letras HOLAMUNDO --> HO LA MU ND OX
+     * Una vez tengamos hecho esto iremos de dos en dos letras mirando su fila/columna en la matriz
+     * Si comparten fila --> se cogera su caracter de la derecha respectivamente y ciclicamente
+     * Si comparten columna --> se cogera su caracter de abajo respectivamente y ciclicamente
+     * Si no coinciden en ninguno lo que se cogera seran los caracteres de la diagonal opuesta
+     * Si tenemos  X y F  como no coinciden ni fila ni columna
+     * cogeremos W y Z ya que son de su diagonal opuesta
+     *      x   y   z
+     *      a   k   q
+     *      w   d   f
+     *
+     */
     public static String encrypt(String text, String pass) {
         StringBuilder devolucion = new StringBuilder();
 
@@ -104,6 +132,28 @@ public class PlayFair {
         return devolucion.toString();
     }
 
+
+    /**
+     * @param text
+     * @param pass
+     * @return frase descifrada
+     * Este algoritmo lo que hace es, recibir una password la cual usaremos para crear
+     * una matriz unica que esa matriz se usara para cifrar la frase a cifrar
+     *
+     * La password  se limpia de caracteres especiales como acentos, numeros, signos etc
+     * Si encontramos un J se Cambiara por una I
+     *
+     * Iremos de dos en dos letras mirando su fila/columna en la matriz
+     * Si comparten fila --> se cogera su caracter de la derecha respectivamente y ciclicamente
+     * Si comparten columna --> se cogera su caracter de abajo respectivamente y ciclicamente
+     * Si no coinciden en ninguno lo que se cogera seran los caracteres de la diagonal opuesta
+     * Si tenemos  X y F  como no coinciden ni fila ni columna
+     * cogeremos W y Z ya que son de su diagonal opuesta
+     *      x   y   z
+     *      a   k   q
+     *      w   d   f
+     *
+     */
     public static String decrypt(String text, String pass) {
         StringBuilder devolucion = new StringBuilder();
         String[][]matriz=crearMatriz(pass);
@@ -184,11 +234,7 @@ public class PlayFair {
     }
 
 
-
-
-
-
-
+    //Esta funcion lo que hace es crearnos una matriz para cifrar usando la password que nosotros le pasemos
     public static String[][] crearMatriz(String pass){
         pass = pass.toUpperCase();
         String[] letras = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W","X", "Y", "Z"};
@@ -264,6 +310,8 @@ public class PlayFair {
 
 
 
+    //Esta funcion nos dice en que fila y en que columna
+    // esta esa letra que hemos pasado en la matriz para cifrar
     public static int[] saberFilCol(String[][] matriz, char c){
 
         for (int i = 0; i < matriz.length; i++) {
@@ -285,7 +333,9 @@ public class PlayFair {
     public static String  limpiarFrase(String frase){
         StringBuilder devolver = new StringBuilder();
         for (int i = 0; i < frase.length(); i++) {
-            if (frase.charAt(i) >= 65 && frase.charAt(i)<=90){
+            if  (frase.charAt(i) == 'J'){
+                devolver.append('I');
+            }else if (frase.charAt(i) >= 65 && frase.charAt(i)<=90){
                 devolver.append(frase.charAt(i));
             }else{
                 char c = caracterEspecial(frase.charAt(i));
