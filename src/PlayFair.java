@@ -42,17 +42,7 @@ public class PlayFair {
         StringBuilder fraseLimpia = new StringBuilder();
         fraseLimpia.append(limpiarFrase(text.toUpperCase()));
 
-        for (int i = 1,j=0; i < fraseLimpia.length(); i++,j++) {
-            char caracter1 = fraseLimpia.charAt(i);
-            char caracter2 = fraseLimpia.charAt(j);
-            if (caracter1 == caracter2){
-                fraseLimpia.replace(j+1,i,"X");
-            }
-        }
-
-
-        /*
-        int longi = fraseLimpia.length();
+        int longi = fraseLimpia.length(), desplazamiento = 0;
         int contador=0;
         int [] posiciones = new int[fraseLimpia.length()];
         for (int i = 1; i < longi; i+=2) {
@@ -63,19 +53,19 @@ public class PlayFair {
             if (caracter1 == caracter2){
                 posiciones[contador]=i;
                 contador++;
+                i=0;
             }
 
         }
 
         for (int i = 0; i <contador ; i++) {
-            fraseLimpia.replace(posiciones[i],posiciones[i],"X");
+            fraseLimpia.replace(posiciones[i]+desplazamiento,posiciones[i]+desplazamiento,"X");
+            //desplazamiento++;
         }
 
-        */
 
 
 
-        int longitud = fraseLimpia.length();
         if  (fraseLimpia.length()%2 != 0){
             if (fraseLimpia.charAt(fraseLimpia.length()-1) == 'X'){
                 fraseLimpia.append("S");
