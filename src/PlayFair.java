@@ -36,6 +36,7 @@ public class PlayFair {
     public static String encrypt(String text, String pass) {
         StringBuilder devolucion = new StringBuilder();
 
+
         String[][]matriz=crearMatriz(pass);
         //Hasta este punto lo que tenemos hecho es la matriz para cifrar rellenada.
 
@@ -51,11 +52,9 @@ public class PlayFair {
             char caracter2 = fraseLimpia.charAt(i);
 
             if (caracter1 == caracter2){
-                posiciones[contador]=i;
-                contador++;
-                i=0;
+                fraseLimpia.replace(i,i,"X");
+                i=1;
             }
-
         }
 
         for (int i = 0; i <contador ; i++) {

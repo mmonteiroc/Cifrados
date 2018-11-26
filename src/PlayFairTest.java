@@ -36,7 +36,7 @@ public class PlayFairTest {
         assertEquals("GH CO SH FQ HB OF SI GH KI AR NU GH BT IW KZ LF QF NF FH LF PZ QF DX CW FT KW",
                 PlayFair.encrypt("La riquesa és com l'aigua salada, com més es beu, més set produïx.", "arthur"));
     }
-    
+
 
     @Test
     public void rtest1() {
